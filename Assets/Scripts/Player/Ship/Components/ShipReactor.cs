@@ -6,12 +6,12 @@ public class ShipReactor : ShipComponent
     float m_intensity;
 
     bool m_active;
-    Rigidbody2D m_shipRigidbody2d;
+    Rigidbody m_shipRigidbody;
     TrailRenderer m_trail;
 
     public override void Init(ShipController.ShipContext context)
     {
-        m_shipRigidbody2d = context.rigidbody;
+        m_shipRigidbody = context.rigidbody;
         context.onAccelerate += (bool accelerate) => m_active = accelerate;
 
         m_trail = GetComponentInChildren<TrailRenderer>();
@@ -19,8 +19,8 @@ public class ShipReactor : ShipComponent
 
     private void FixedUpdate()
     {
-        Vector2 force = Time.fixedDeltaTime * m_intensity * m_shipRigidbody2d.transform.up * (m_active ? 1 : 0);
-        m_shipRigidbody2d.AddForceAtPosition(force, transform.position);
+        Vector2 force = m_intensity * transform.up * (m_active ? 1 : 0);
+        m_shipRigidbody.AddForceAtPosition(force, transform.position);
 
         m_trail.emitting = m_active;
     }

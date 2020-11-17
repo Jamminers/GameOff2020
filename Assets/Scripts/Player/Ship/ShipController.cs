@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Rigidbody))]
 public class ShipController : MonoBehaviour, ShipControls.IShipActions
 {
     public delegate void delegateDirection(float direction);
@@ -8,7 +9,7 @@ public class ShipController : MonoBehaviour, ShipControls.IShipActions
 
     public class ShipContext
     {
-        public Rigidbody2D rigidbody;
+        public Rigidbody rigidbody;
 
         public delegateDirection onDirection;
         public delegateAccelerate onAccelerate;
@@ -23,8 +24,9 @@ public class ShipController : MonoBehaviour, ShipControls.IShipActions
         m_controls.Ship.SetCallbacks(this);
         m_controls.Ship.Enable();
 
-        m_context = new ShipContext() {
-            rigidbody = GetComponent<Rigidbody2D>()
+        m_context = new ShipContext()
+        {
+            rigidbody = GetComponent<Rigidbody>()
         };
 
         foreach (var component in GetComponentsInChildren<ShipComponent>())
