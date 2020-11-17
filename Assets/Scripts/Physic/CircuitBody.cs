@@ -7,6 +7,8 @@ public class CircuitBody : MonoBehaviour
     float m_hoverHeight = 1;
     [SerializeField]
     float m_hoverForce = 1;
+    [SerializeField]
+    Transform m_circuitFollow;
 
     LevelManager m_level;
     Rigidbody m_rigidbody;
@@ -23,7 +25,7 @@ public class CircuitBody : MonoBehaviour
         m_raycastLayerMask = LayerMask.GetMask("Environment");
     }
 
-    private void FixedUpdate()
+    protected void FixedUpdate()
     {
         Vector3 absoluteVelocity = m_rigidbody.position - m_oldPosition;
         Vector3 circuitPosition = m_level.getCircuitProjectedPosition(transform.position);
@@ -41,11 +43,11 @@ public class CircuitBody : MonoBehaviour
                 downVelocity *= downVelocity;
             }
             float hoverRatio = 1 - (hit.distance / m_hoverHeight);
-            m_rigidbody.AddForce(upAxis * (m_hoverForce * hoverRatio + downVelocity));
+            m_rigidbody.AddForce(upAxis * (m_hoverForce * hoverRatio + downVelocity), ForceMode.Acceleration);
         }
         else
         {
-            m_rigidbody.AddForce(upAxis * Physics.gravity.y);
+            m_rigidbody.AddForce(upAxis * Physics.gravity.y, ForceMode.Acceleration);
         }
 
         Vector3 rotation = transform.eulerAngles;
@@ -53,5 +55,7 @@ public class CircuitBody : MonoBehaviour
         transform.eulerAngles = rotation;
 
         m_oldPosition = m_rigidbody.position;
+        m_circuitFollow.transform.position = circuitPosition;
+        m_circuitFollow.transform.eulerAngles = rotation;
     }
 }

@@ -17,6 +17,6 @@ public class ShipNavigation : ShipComponent
 
     private void FixedUpdate()
     {
-        m_shipTransform.RotateAround(transform.position, Vector3.forward, -m_direction * m_intensity);
+        m_shipTransform.RotateAround(transform.position, m_shipTransform.up, -m_direction * m_intensity);
     }
 }

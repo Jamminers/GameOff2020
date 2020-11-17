@@ -19,8 +19,8 @@ public class ShipReactor : ShipComponent
 
     private void FixedUpdate()
     {
-        Vector2 force = m_intensity * transform.up * (m_active ? 1 : 0);
-        m_shipRigidbody.AddForceAtPosition(force, transform.position);
+        Vector3 force = m_intensity * m_shipRigidbody.transform.forward * (m_active ? 1 : 0);
+        m_shipRigidbody.AddForceAtPosition(force, transform.position, ForceMode.Acceleration);
 
         m_trail.emitting = m_active;
     }
