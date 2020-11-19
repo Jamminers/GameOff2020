@@ -11,7 +11,13 @@ public class CircuitBody : MonoBehaviour
     Transform m_circuitFollow;
 
     LevelManager m_level;
-    Rigidbody m_rigidbody;
+
+    [HideInInspector]
+    public Rigidbody Rigidbody;
+    [HideInInspector]
+    public Vector3 Up, Forward, CircuitPosition;
+    [HideInInspector]
+    public Quaternion CircuitRotation;
 
     int m_raycastLayerMask;
 
@@ -19,7 +25,7 @@ public class CircuitBody : MonoBehaviour
 
     private void Awake()
     {
-        m_rigidbody = GetComponent<Rigidbody>();
+        Rigidbody = GetComponent<Rigidbody>();
         m_level = LevelManager.Instance;
 
         m_raycastLayerMask = LayerMask.GetMask("Environment");
@@ -27,35 +33,41 @@ public class CircuitBody : MonoBehaviour
 
     protected void FixedUpdate()
     {
-        Vector3 absoluteVelocity = m_rigidbody.position - m_oldPosition;
-        Vector3 circuitPosition = m_level.getCircuitProjectedPosition(transform.position);
-        Vector3 upAxis = (circuitPosition - transform.position).normalized;
+        var projection = m_level.getCircuitProjection(transform.position);
+        CircuitPosition = projection.location;
+        Forward = projection.tangent;
 
-        Ray rayToFloor = new Ray(transform.position, -upAxis);
+        Vector3 absoluteVelocity = Rigidbody.position - m_oldPosition;
+        Up = (CircuitPosition - transform.position).normalized;
+
+        Vector3 upShip = Vector3.ProjectOnPlane(Up, projection.tangent).normalized;
+        Vector3 upCircuit = Vector3.ProjectOnPlane(projection.up, projection.tangent).normalized;
+        CircuitRotation = Quaternion.FromToRotation(upCircuit, upShip) * projection.Rotation;
+
+        m_oldPosition = Rigidbody.position;
+        m_circuitFollow.transform.position = CircuitPosition;
+        Vector3 eulerRotation = m_circuitFollow.transform.eulerAngles;
+        eulerRotation.z = upShip.z;
+        m_circuitFollow.transform.rotation = CircuitRotation;
+
+        // Hover effect
+        Ray rayToFloor = new Ray(transform.position, -Up);
         RaycastHit hit;
         if (Physics.Raycast(rayToFloor, out hit, m_hoverHeight))
         {
-            Vector3 downForce = Vector3.Project(absoluteVelocity, -upAxis) / Time.fixedDeltaTime;
+            Vector3 downForce = Vector3.Project(absoluteVelocity, -Up) / Time.fixedDeltaTime;
             float downVelocity = 0;
-            if (Vector3.Dot(m_rigidbody.velocity, -upAxis) > 0)
+            if (Vector3.Dot(Rigidbody.velocity, -Up) > 0)
             {
                 downVelocity = downForce.magnitude;
                 downVelocity *= downVelocity;
             }
             float hoverRatio = 1 - (hit.distance / m_hoverHeight);
-            m_rigidbody.AddForce(upAxis * (m_hoverForce * hoverRatio + downVelocity), ForceMode.Acceleration);
+            Rigidbody.AddForce(Up * (m_hoverForce * hoverRatio + downVelocity), ForceMode.Acceleration);
         }
         else
         {
-            m_rigidbody.AddForce(upAxis * Physics.gravity.y, ForceMode.Acceleration);
+            Rigidbody.AddForce(Up * Physics.gravity.y, ForceMode.Acceleration);
         }
-
-        Vector3 rotation = transform.eulerAngles;
-        rotation.z = Quaternion.FromToRotation(Vector3.up, upAxis).eulerAngles.z;
-        transform.eulerAngles = rotation;
-
-        m_oldPosition = m_rigidbody.position;
-        m_circuitFollow.transform.position = circuitPosition;
-        m_circuitFollow.transform.eulerAngles = rotation;
     }
 }

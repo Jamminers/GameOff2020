@@ -11,7 +11,7 @@ public class ShipReactor : ShipComponent
 
     public override void Init(ShipController.ShipContext context)
     {
-        m_shipRigidbody = context.rigidbody;
+        m_shipRigidbody = context.ship.Rigidbody;
         context.onAccelerate += (bool accelerate) => m_active = accelerate;
 
         m_trail = GetComponentInChildren<TrailRenderer>();
