@@ -11,7 +11,7 @@ public class ShipReactor : ShipComponent
 
     public override void Init(ShipController.ShipContext context)
     {
-        m_shipRigidbody = context.rigidbody;
+        m_shipRigidbody = context.ship.Rigidbody;
         context.onAccelerate += (bool accelerate) => m_active = accelerate;
 
         m_trail = GetComponentInChildren<TrailRenderer>();
@@ -19,8 +19,8 @@ public class ShipReactor : ShipComponent
 
     private void FixedUpdate()
     {
-        Vector2 force = m_intensity * transform.up * (m_active ? 1 : 0);
-        m_shipRigidbody.AddForceAtPosition(force, transform.position);
+        Vector3 force = m_intensity * m_shipRigidbody.transform.forward * (m_active ? 1 : 0);
+        m_shipRigidbody.AddForceAtPosition(force, transform.position, ForceMode.Acceleration);
 
         m_trail.emitting = m_active;
     }

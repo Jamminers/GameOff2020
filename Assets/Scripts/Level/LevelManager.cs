@@ -9,9 +9,8 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField]
     private Spline m_circuitSpline;
 
-    public Vector3 getCircuitProjectedPosition(Vector3 target)
+    public CurveSample getCircuitProjection(Vector3 target)
     {
-        CurveSample projection = m_circuitSpline.GetProjectionSample(target);
-        return projection.location;
+        return m_circuitSpline.GetProjectionSample(target);
     }
 }
