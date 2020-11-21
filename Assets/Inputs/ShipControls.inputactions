@@ -7,7 +7,7 @@
             "actions": [
                 {
                     "name": "Accelerate",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "c616756a-c234-4ec3-946a-8abca10e6ca2",
                     "expectedControlType": "Button",
                     "processors": "",

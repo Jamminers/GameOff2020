@@ -2,28 +2,21 @@
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Ship))]
-public class ShipController : MonoBehaviour, ShipControls.IShipActions
+public class ShipController : MonoBehaviour
 {
-    public delegate void delegateDirection(float direction);
-    public delegate void delegateAccelerate(bool accelerate);
+    public delegate void delegateFloat(float value);
 
     public class ShipContext
     {
         public Ship ship;
 
-        public delegateDirection onDirection;
-        public delegateAccelerate onAccelerate;
+        public delegateFloat onDirection;
+        public delegateFloat onAccelerate;
     }
     ShipContext m_context;
 
-    ShipControls m_controls;
-
     void Start()
     {
-        m_controls = new ShipControls();
-        m_controls.Ship.SetCallbacks(this);
-        m_controls.Ship.Enable();
-
         m_context = new ShipContext()
         {
             ship = GetComponent<Ship>(),
@@ -35,17 +28,15 @@ public class ShipController : MonoBehaviour, ShipControls.IShipActions
         }
     }
 
-    public void OnDirection(InputAction.CallbackContext context)
+    public void OnDirection(InputValue val)
     {
-        // float value = context.phase == InputActionPhase.Started ? context.ReadValue<float>() : 0;
-        float value = context.ReadValue<float>();
         if (m_context.onDirection != null)
-            m_context.onDirection(value);
+            m_context.onDirection(val.Get<float>());
     }
 
-    public void OnAccelerate(InputAction.CallbackContext context)
+    public void OnAccelerate(InputValue val)
     {
         if (m_context.onAccelerate != null)
-            m_context.onAccelerate(context.ReadValueAsButton());
+            m_context.onAccelerate(val.Get<float>());
     }
 }

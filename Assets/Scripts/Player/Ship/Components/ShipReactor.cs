@@ -12,7 +12,7 @@ public class ShipReactor : ShipComponent
     public override void Init(ShipController.ShipContext context)
     {
         m_shipRigidbody = context.ship.Rigidbody;
-        context.onAccelerate += (bool accelerate) => m_active = accelerate;
+        context.onAccelerate += (float value) => m_active = value == 1;
 
         m_trail = GetComponentInChildren<TrailRenderer>();
     }
