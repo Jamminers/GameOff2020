@@ -37,7 +37,7 @@ public class ShipNavigation : ShipComponent
         m_ship.Rigidbody.rotation = Quaternion.Lerp(
             m_ship.Rigidbody.rotation,
             targetDirection,
-            Time.fixedDeltaTime
+            Time.fixedDeltaTime * m_intensity
         );
     }
 }
