@@ -18,7 +18,7 @@ public class CircuitBody : MonoBehaviour
     public Vector3 Up, Forward, CircuitPosition;
     [HideInInspector]
     public Quaternion CircuitRotation;
-    // [HideInInspector]
+    [HideInInspector]
     public Vector3 AbsoluteVelocity;
 
     int m_raycastLayerMask;
