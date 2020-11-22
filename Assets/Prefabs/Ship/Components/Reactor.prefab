@@ -247,10 +247,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4672da3c91ac4364d8f15eb7deaf2a42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_coolDown: 2
+  m_releaseTime: 1
   m_intensityMax: 10
   m_speedMax: 10
   m_delayAcceleration: 1
-  m_delayDeceleration: 0
   m_curveAcceleration:
     serializedVersion: 2
     m_Curve:
@@ -275,6 +276,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  m_delayDeceleration: 0
   m_curveDeceleration:
     serializedVersion: 2
     m_Curve:
