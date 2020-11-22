@@ -18,6 +18,8 @@ public class CircuitBody : MonoBehaviour
     public Vector3 Up, Forward, CircuitPosition;
     [HideInInspector]
     public Quaternion CircuitRotation;
+    // [HideInInspector]
+    public Vector3 AbsoluteVelocity;
 
     int m_raycastLayerMask;
 
@@ -37,7 +39,7 @@ public class CircuitBody : MonoBehaviour
         CircuitPosition = projection.location;
         Forward = projection.tangent;
 
-        Vector3 absoluteVelocity = Rigidbody.position - m_oldPosition;
+        AbsoluteVelocity = (Rigidbody.position - m_oldPosition) / Time.fixedDeltaTime;
         Up = (CircuitPosition - transform.position).normalized;
 
         Vector3 upShip = Vector3.ProjectOnPlane(Up, projection.tangent).normalized;
@@ -55,7 +57,7 @@ public class CircuitBody : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(rayToFloor, out hit, m_hoverHeight))
         {
-            Vector3 downForce = Vector3.Project(absoluteVelocity, -Up) / Time.fixedDeltaTime;
+            Vector3 downForce = Vector3.Project(AbsoluteVelocity, -Up);
             float downVelocity = 0;
             if (Vector3.Dot(Rigidbody.velocity, -Up) > 0)
             {
