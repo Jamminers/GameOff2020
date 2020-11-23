@@ -5,7 +5,8 @@ using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace SplineMesh {
+namespace SplineMesh
+{
     /// <summary>
     /// A curved line made of oriented nodes.
     /// Each segment is a cubic Bézier curve connected to spline nodes.
@@ -14,7 +15,8 @@ namespace SplineMesh {
     /// </summary>
     [DisallowMultipleComponent]
     [ExecuteInEditMode]
-    public class Spline : MonoBehaviour {
+    public class Spline : MonoBehaviour
+    {
         /// <summary>
         /// The spline nodes.
         /// Warning, this collection shouldn't be changed manualy. Use specific methods to add and remove nodes.
@@ -36,9 +38,11 @@ namespace SplineMesh {
         [SerializeField]
         private bool isLoop;
 
-        public bool IsLoop {
+        public bool IsLoop
+        {
             get { return isLoop; }
-            set {
+            set
+            {
                 isLoop = value;
                 updateLoopBinding();
             }
@@ -58,33 +62,40 @@ namespace SplineMesh {
         /// <summary>
         /// Clear the nodes and curves, then add two default nodes for the reset spline to be visible in editor.
         /// </summary>
-        private void Reset() {
+        private void Reset()
+        {
             nodes.Clear();
             curves.Clear();
             AddNode(new SplineNode(new Vector3(5, 0, 0), new Vector3(5, 0, -3)));
             AddNode(new SplineNode(new Vector3(10, 0, 0), new Vector3(10, 0, 3)));
-            RaiseNodeListChanged(new ListChangedEventArgs<SplineNode>() {
+            RaiseNodeListChanged(new ListChangedEventArgs<SplineNode>()
+            {
                 type = ListChangeType.clear
             });
             UpdateAfterCurveChanged();
         }
 
-        private void OnEnable() {
+        private void OnEnable()
+        {
             RefreshCurves();
         }
 
-        public ReadOnlyCollection<CubicBezierCurve> GetCurves() {
+        public ReadOnlyCollection<CubicBezierCurve> GetCurves()
+        {
             return curves.AsReadOnly();
         }
 
-        private void RaiseNodeListChanged(ListChangedEventArgs<SplineNode> args) {
+        private void RaiseNodeListChanged(ListChangedEventArgs<SplineNode> args)
+        {
             if (NodeListChanged != null)
                 NodeListChanged.Invoke(this, args);
         }
 
-        private void UpdateAfterCurveChanged() {
+        private void UpdateAfterCurveChanged()
+        {
             Length = 0;
-            foreach (var curve in curves) {
+            foreach (var curve in curves)
+            {
                 Length += curve.Length;
             }
             CurveChanged.Invoke();
@@ -96,7 +107,8 @@ namespace SplineMesh {
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        public CurveSample GetSample(float t) {
+        public CurveSample GetSample(float t)
+        {
             int index = GetNodeIndexForTime(t);
             return curves[index].GetSample(t - index);
         }
@@ -107,12 +119,15 @@ namespace SplineMesh {
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        public CubicBezierCurve GetCurve(float t) {
+        public CubicBezierCurve GetCurve(float t)
+        {
             return curves[GetNodeIndexForTime(t)];
         }
 
-        private int GetNodeIndexForTime(float t) {
-            if (t < 0 || t > nodes.Count - 1) {
+        private int GetNodeIndexForTime(float t)
+        {
+            if (t < 0 || t > nodes.Count - 1)
+            {
                 throw new ArgumentException(string.Format("Time must be between 0 and last node index ({0}). Given time was {1}.", nodes.Count - 1, t));
             }
             int res = Mathf.FloorToInt(t);
@@ -120,21 +135,26 @@ namespace SplineMesh {
                 res--;
             return res;
         }
-		
-	/// <summary>
-	/// Refreshes the spline's internal list of curves.
-	// </summary>
-	public void RefreshCurves() {
+
+        /// <summary>
+        /// Refreshes the spline's internal list of curves.
+        // </summary>
+        public void RefreshCurves()
+        {
             curves.Clear();
-            for (int i = 0; i < nodes.Count - 1; i++) {
+            CubicBezierCurve previous = null;
+            for (int i = 0; i < nodes.Count - 1; i++)
+            {
                 SplineNode n = nodes[i];
                 SplineNode next = nodes[i + 1];
 
-                CubicBezierCurve curve = new CubicBezierCurve(n, next);
+                CubicBezierCurve curve = new CubicBezierCurve(n, next, previous);
                 curve.Changed.AddListener(UpdateAfterCurveChanged);
                 curves.Add(curve);
+                previous = curve;
             }
-            RaiseNodeListChanged(new ListChangedEventArgs<SplineNode>() {
+            RaiseNodeListChanged(new ListChangedEventArgs<SplineNode>()
+            {
                 type = ListChangeType.clear
             });
             UpdateAfterCurveChanged();
@@ -146,18 +166,24 @@ namespace SplineMesh {
         /// </summary>
         /// <param name="d"></param>
         /// <returns></returns>
-        public CurveSample GetSampleAtDistance(float d) {
+        public CurveSample GetSampleAtDistance(float d)
+        {
             if (d < 0 || d > Length)
                 throw new ArgumentException(string.Format("Distance must be between 0 and spline length ({0}). Given distance was {1}.", Length, d));
-            foreach (CubicBezierCurve curve in curves) {
+            foreach (CubicBezierCurve curve in curves)
+            {
                 // test if distance is approximatly equals to curve length, because spline
                 // length may be greater than cumulated curve length due to float precision
-                if(d > curve.Length && d < curve.Length + 0.0001f) {
+                if (d > curve.Length && d < curve.Length + 0.0001f)
+                {
                     d = curve.Length;
                 }
-                if (d > curve.Length) {
+                if (d > curve.Length)
+                {
                     d -= curve.Length;
-                } else {
+                }
+                else
+                {
                     return curve.GetSampleAtDistance(d);
                 }
             }
@@ -168,15 +194,18 @@ namespace SplineMesh {
         /// Adds a node at the end of the spline.
         /// </summary>
         /// <param name="node"></param>
-        public void AddNode(SplineNode node) {
+        public void AddNode(SplineNode node)
+        {
             nodes.Add(node);
-            if (nodes.Count != 1) {
+            if (nodes.Count != 1)
+            {
                 SplineNode previousNode = nodes[nodes.IndexOf(node) - 1];
-                CubicBezierCurve curve = new CubicBezierCurve(previousNode, node);
+                CubicBezierCurve curve = new CubicBezierCurve(previousNode, node, curves[-1]);
                 curve.Changed.AddListener(UpdateAfterCurveChanged);
                 curves.Add(curve);
             }
-            RaiseNodeListChanged(new ListChangedEventArgs<SplineNode>() {
+            RaiseNodeListChanged(new ListChangedEventArgs<SplineNode>()
+            {
                 type = ListChangeType.Add,
                 newItems = new List<SplineNode>() { node }
             });
@@ -190,7 +219,8 @@ namespace SplineMesh {
         /// </summary>
         /// <param name="index"></param>
         /// <param name="node"></param>
-        public void InsertNode(int index, SplineNode node) {
+        public void InsertNode(int index, SplineNode node)
+        {
             if (index == 0)
                 throw new Exception("Can't insert a node at index 0");
 
@@ -201,10 +231,11 @@ namespace SplineMesh {
 
             curves[index - 1].ConnectEnd(node);
 
-            CubicBezierCurve curve = new CubicBezierCurve(node, nextNode);
+            CubicBezierCurve curve = new CubicBezierCurve(node, nextNode, curves[index]);
             curve.Changed.AddListener(UpdateAfterCurveChanged);
             curves.Insert(index, curve);
-            RaiseNodeListChanged(new ListChangedEventArgs<SplineNode>() {
+            RaiseNodeListChanged(new ListChangedEventArgs<SplineNode>()
+            {
                 type = ListChangeType.Insert,
                 newItems = new List<SplineNode>() { node },
                 insertIndex = index
@@ -217,15 +248,18 @@ namespace SplineMesh {
         /// Remove the given node from the spline. The given node must exist and the spline must have more than 2 nodes.
         /// </summary>
         /// <param name="node"></param>
-        public void RemoveNode(SplineNode node) {
+        public void RemoveNode(SplineNode node)
+        {
             int index = nodes.IndexOf(node);
 
-            if (nodes.Count <= 2) {
+            if (nodes.Count <= 2)
+            {
                 throw new Exception("Can't remove the node because a spline needs at least 2 nodes.");
             }
 
             CubicBezierCurve toRemove = index == nodes.Count - 1 ? curves[index - 1] : curves[index];
-            if (index != 0 && index != nodes.Count - 1) {
+            if (index != 0 && index != nodes.Count - 1)
+            {
                 SplineNode nextNode = nodes[index + 1];
                 curves[index - 1].ConnectEnd(nextNode);
             }
@@ -234,7 +268,8 @@ namespace SplineMesh {
             toRemove.Changed.RemoveListener(UpdateAfterCurveChanged);
             curves.Remove(toRemove);
 
-            RaiseNodeListChanged(new ListChangedEventArgs<SplineNode>() {
+            RaiseNodeListChanged(new ListChangedEventArgs<SplineNode>()
+            {
                 type = ListChangeType.Remove,
                 removedItems = new List<SplineNode>() { node },
                 removeIndex = index
@@ -244,26 +279,33 @@ namespace SplineMesh {
         }
 
         SplineNode start, end;
-        private void updateLoopBinding() {
-            if(start != null) {
+        private void updateLoopBinding()
+        {
+            if (start != null)
+            {
                 start.Changed -= StartNodeChanged;
             }
-            if(end != null) {
+            if (end != null)
+            {
                 end.Changed -= EndNodeChanged;
             }
-            if (isLoop) {
+            if (isLoop)
+            {
                 start = nodes[0];
                 end = nodes[nodes.Count - 1];
                 start.Changed += StartNodeChanged;
                 end.Changed += EndNodeChanged;
                 StartNodeChanged(null, null);
-            } else {
+            }
+            else
+            {
                 start = null;
                 end = null;
             }
         }
 
-        private void StartNodeChanged(object sender, EventArgs e) {
+        private void StartNodeChanged(object sender, EventArgs e)
+        {
             end.Changed -= EndNodeChanged;
             end.Position = start.Position;
             end.Direction = start.Direction;
@@ -273,7 +315,8 @@ namespace SplineMesh {
             end.Changed += EndNodeChanged;
         }
 
-        private void EndNodeChanged(object sender, EventArgs e) {
+        private void EndNodeChanged(object sender, EventArgs e)
+        {
             start.Changed -= StartNodeChanged;
             start.Position = end.Position;
             start.Direction = end.Direction;
@@ -283,18 +326,22 @@ namespace SplineMesh {
             start.Changed += StartNodeChanged;
         }
 
-        public CurveSample GetProjectionSample(Vector3 pointToProject) {
+        public CurveSample GetProjectionSample(Vector3 pointToProject)
+        {
             CurveSample closest = default(CurveSample);
             float minSqrDistance = float.MaxValue;
-            foreach (var curve in curves) {
-                var projection = curve.GetProjectionSample(pointToProject);
-                if (curve == curves[0]) {
+            for (int c = 0; c < curves.Count; c++)
+            {
+                var projection = curves[c].GetProjectionSample(pointToProject);
+                if (c == 0)
+                {
                     closest = projection;
                     minSqrDistance = (projection.location - pointToProject).sqrMagnitude;
                     continue;
                 }
                 var sqrDist = (projection.location - pointToProject).sqrMagnitude;
-                if (sqrDist < minSqrDistance) {
+                if (sqrDist < minSqrDistance)
+                {
                     minSqrDistance = sqrDist;
                     closest = projection;
                 }
@@ -303,13 +350,15 @@ namespace SplineMesh {
         }
     }
 
-    public enum ListChangeType {
+    public enum ListChangeType
+    {
         Add,
         Insert,
         Remove,
         clear,
     }
-    public class ListChangedEventArgs<T> : EventArgs {
+    public class ListChangedEventArgs<T> : EventArgs
+    {
         public ListChangeType type;
         public List<T> newItems;
         public List<T> removedItems;

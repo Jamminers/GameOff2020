@@ -234,7 +234,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1.0000002, z: 1.0000002}
-  m_Center: {x: 0, y: -0.00000023841858, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3828371292956334820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,10 +247,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4672da3c91ac4364d8f15eb7deaf2a42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_coolDown: 2
-  m_releaseTime: 1
-  m_intensityMax: 10
-  m_speedMax: 10
+  m_coolDown: 0
+  m_releaseTime: 0
+  m_intensityMax: 20
+  m_speedMax: 20
   m_delayAcceleration: 1
   m_curveAcceleration:
     serializedVersion: 2

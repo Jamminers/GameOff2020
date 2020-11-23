@@ -21,8 +21,8 @@ public class ShipNavigation : ShipComponent
     private void FixedUpdate()
     {
         Vector3 vectorDown = m_ship.transform.position - m_ship.CircuitPosition;
-        Vector3 vectorLeft = Quaternion.AngleAxis(-m_steerRange, m_ship.Forward) * vectorDown;
-        Vector3 vectorRight = Quaternion.AngleAxis(m_steerRange, m_ship.Forward) * vectorDown;
+        Vector3 vectorLeft = Quaternion.AngleAxis(-m_steerRange, m_ship.m_followFront.position) * vectorDown;
+        Vector3 vectorRight = Quaternion.AngleAxis(m_steerRange, m_ship.m_followFront.position) * vectorDown;
 
         Debug.DrawRay(m_ship.CircuitPosition, vectorDown, Color.blue, Time.fixedDeltaTime);
         Debug.DrawRay(m_ship.CircuitPosition, vectorLeft, Color.red, Time.fixedDeltaTime);
