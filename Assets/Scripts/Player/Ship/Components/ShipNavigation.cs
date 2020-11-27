@@ -56,13 +56,15 @@ public class ShipNavigation : ShipComponent
         Debug.DrawRay(m_ship.CircuitPosition, directionDown.normalized * hit.distance, Color.red, Time.fixedDeltaTime);
         directionStart = hit.point;
 
+        float currentHeight = (m_ship.transform.position - directionStart).magnitude;
+
         Physics.Raycast(m_ship.CircuitPosition, directionDownForward.normalized, out hit, 100, m_levelLayerMask);
         Debug.DrawRay(m_ship.CircuitPosition, directionDownForward.normalized * hit.distance, Color.red, Time.fixedDeltaTime);
         directionEnd = hit.point;
 
         Physics.Raycast(m_ship.CircuitPosition, directionLookForwardPostion.normalized, out hit, 100, m_levelLayerMask);
         Debug.DrawRay(m_ship.CircuitPosition, directionLookForwardPostion.normalized * hit.distance, Color.red, Time.fixedDeltaTime);
-        CircuitForward.position = hit.point + m_ship.transform.position - directionStart;
+        CircuitForward.position = hit.point + currentHeight * -directionLookForwardPostion.normalized;
 
         Vector3 direction = directionEnd - directionStart;
 
