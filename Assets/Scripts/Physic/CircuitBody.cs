@@ -8,6 +8,9 @@ public class CircuitBody : MonoBehaviour
     [SerializeField]
     float m_hoverForce = 1;
 
+    [SerializeField]
+    public Transform CircuitFollow;
+
     protected LevelManager m_level;
 
     [HideInInspector]
@@ -19,8 +22,6 @@ public class CircuitBody : MonoBehaviour
     [HideInInspector]
     public Vector3 AbsoluteVelocity;
 
-    int m_raycastLayerMask;
-
     Vector3 m_oldPosition;
 
     protected SplineMesh.CurveSample m_circuitProjection;
@@ -29,8 +30,6 @@ public class CircuitBody : MonoBehaviour
     {
         Rigidbody = GetComponent<Rigidbody>();
         m_level = LevelManager.Instance;
-
-        m_raycastLayerMask = LayerMask.GetMask("Environment");
     }
 
     protected void FixedUpdate()
@@ -47,10 +46,14 @@ public class CircuitBody : MonoBehaviour
 
         m_oldPosition = Rigidbody.position;
 
+        CircuitFollow.position = CircuitPosition;
+        CircuitFollow.rotation = CircuitRotation;
+
         // Hover effect
         Ray rayToFloor = new Ray(transform.position, -Up);
+        LayerMask levelLayerMask = 1 << m_level.gameObject.layer;
         RaycastHit hit;
-        if (Physics.Raycast(rayToFloor, out hit, m_hoverHeight))
+        if (Physics.Raycast(rayToFloor, out hit, m_hoverHeight, levelLayerMask))
         {
             Vector3 downForce = Vector3.Project(AbsoluteVelocity, -Up);
             float downVelocity = 0;
