@@ -14,6 +14,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Brake",
+                    "type": "Value",
+                    "id": "3f7e2c82-3ecf-4584-aada-845c4f49108e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Direction",
                     "type": "Value",
                     "id": "1e6d6feb-7db8-451f-804a-fecf381c8f0c",
@@ -108,6 +116,28 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Accelerate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dce301ce-9c5e-4b89-b621-86d515362681",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Brake",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a2efb98a-3cb9-4370-bd50-f2b0a5cbbafe",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Brake",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -12,6 +12,7 @@ public class ShipController : MonoBehaviour
 
         public delegateFloat onDirection;
         public delegateFloat onAccelerate;
+        public delegateFloat onBrake;
     }
     ShipContext m_context;
 
@@ -38,5 +39,11 @@ public class ShipController : MonoBehaviour
     {
         if (m_context.onAccelerate != null)
             m_context.onAccelerate(val.Get<float>());
+    }
+
+    public void OnBrake(InputValue val)
+    {
+        if (m_context.onBrake != null)
+            m_context.onBrake(val.Get<float>());
     }
 }
