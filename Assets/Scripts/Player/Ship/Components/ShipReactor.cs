@@ -26,12 +26,10 @@ public class ShipReactor : ShipComponent
     bool m_active;
     float m_lastActive;
     float m_t, m_intensityCurrent;
-    Ship m_ship;
     TrailRenderer m_trail;
 
-    public override void Init(ShipController.ShipContext context)
+    protected override void InitSpecific(ShipController.ShipContext context)
     {
-        m_ship = context.ship;
         context.onAccelerate += (float value) => m_active = value == 1;
 
         m_trail = GetComponentInChildren<TrailRenderer>();

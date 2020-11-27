@@ -18,17 +18,11 @@ public class ShipNavigation : ShipComponent
     float m_currentRotation = 0;
     float m_direction;
 
-    Ship m_ship;
     LayerMask m_levelLayerMask;
 
-    private void Awake()
+    protected override void InitSpecific(ShipController.ShipContext context)
     {
         m_levelLayerMask = 1 << LevelManager.Instance.gameObject.layer;
-    }
-
-    public override void Init(ShipController.ShipContext context)
-    {
-        m_ship = context.ship;
         context.onDirection += (float direction) => m_direction = direction;
     }
 
