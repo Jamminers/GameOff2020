@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class ShipReactor : ShipComponent
 {
@@ -23,16 +24,17 @@ public class ShipReactor : ShipComponent
     [SerializeField]
     AnimationCurve m_curveDeceleration;
 
+    [Header("Events")]
+    [SerializeField]
+    UnityEvent<bool> m_onAccelerate;
+
     bool m_active;
     float m_lastActive;
     float m_t, m_intensityCurrent;
-    TrailRenderer m_trail;
 
     protected override void InitSpecific(ShipController.ShipContext context)
     {
         context.onAccelerate += (float value) => m_active = value == 1;
-
-        m_trail = GetComponentInChildren<TrailRenderer>();
     }
 
     private void FixedUpdate()
@@ -57,6 +59,6 @@ public class ShipReactor : ShipComponent
         if (m_ship.AbsoluteVelocity.magnitude < m_speedMax)
             m_ship.Rigidbody.AddForceAtPosition(force, transform.position, ForceMode.Acceleration);
 
-        m_trail.emitting = m_intensityCurrent != 0;
+        m_onAccelerate.Invoke(m_intensityCurrent != 0);
     }
 }
