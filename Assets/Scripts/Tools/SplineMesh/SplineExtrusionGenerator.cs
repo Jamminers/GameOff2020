@@ -19,7 +19,7 @@ namespace SplineMesh
         SplineExtrusion m_splineExtrusion;
 
 
-        private void OnEnable()
+        private void Awake()
         {
             m_splineExtrusion = GetComponent<SplineExtrusion>();
         }
