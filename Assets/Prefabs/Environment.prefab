@@ -23,7 +23,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 979060640118470387}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -344,8 +344,8 @@ MonoBehaviour:
     normal: {x: -0.1, y: -0}
     uCoord: 1
   material: {fileID: 2100000, guid: f35de71d16f82cf429e0913bf7a36f9b, type: 2}
-  textureScale: 0.1
-  sampleSpacing: 0.1
+  textureScale: 0.01
+  sampleSpacing: 1
 --- !u!114 &979060640385213221
 MonoBehaviour:
   m_ObjectHideFlags: 0
