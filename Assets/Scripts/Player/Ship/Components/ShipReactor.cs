@@ -27,6 +27,8 @@ public class ShipReactor : ShipComponent
     [Header("Events")]
     [SerializeField]
     UnityEvent<bool> m_onAccelerate;
+    [SerializeField]
+    UnityEvent<float> m_onSpeed;
 
     bool m_active;
     float m_lastActive;
@@ -60,5 +62,6 @@ public class ShipReactor : ShipComponent
             m_ship.Rigidbody.AddForceAtPosition(force, transform.position, ForceMode.Acceleration);
 
         m_onAccelerate.Invoke(m_intensityCurrent != 0);
+        m_onSpeed.Invoke(m_intensityCurrent);
     }
 }
