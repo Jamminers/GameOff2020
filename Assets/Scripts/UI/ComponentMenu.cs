@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class ComponentMenu : MonoBehaviour
@@ -42,6 +43,8 @@ public class ComponentMenu : MonoBehaviour
             m_selectors[i].name = $"Selector {m_configurations[i].Name}";
             m_selectors[i].Initialize(this, m_configurations[i]);
         }
+
+        m_canvas.GetComponentInChildren<EventSystem>().SetSelectedGameObject(m_selectors[m_selectors.Length - 1].gameObject);
     }
 
     public void OnNavigate(InputValue value)
