@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
                 cam.cullingMask &= ~(1 << i);
         }
 
-        m_title.text = string.Format(m_title.text, input.playerIndex);
+        m_title.text = string.Format(m_title.text, input.playerIndex + 1);
+
+        transform.eulerAngles = new Vector3(0, 0, 90 * input.playerIndex);
     }
 }
