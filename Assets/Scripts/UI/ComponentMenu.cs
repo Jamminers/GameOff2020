@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class ComponentMenu : MonoBehaviour
@@ -23,13 +24,14 @@ public class ComponentMenu : MonoBehaviour
 
     [HideInInspector]
     public ComponentMenuSelector CurrentSelector;
-
     ComponentMenuSelector[] m_selectors;
 
+    Ship m_ship;
 
     private void Awake()
     {
         InstanciateSelector();
+        m_ship = GetComponent<Ship>();
     }
 
     void InstanciateSelector()
@@ -41,6 +43,8 @@ public class ComponentMenu : MonoBehaviour
             m_selectors[i].name = $"Selector {m_configurations[i].Name}";
             m_selectors[i].Initialize(this, m_configurations[i]);
         }
+
+        m_canvas.GetComponentInChildren<EventSystem>().SetSelectedGameObject(m_selectors[m_selectors.Length - 1].gameObject);
     }
 
     public void OnNavigate(InputValue value)
@@ -50,7 +54,13 @@ public class ComponentMenu : MonoBehaviour
             CurrentSelector?.Select(input.x > 0 ? 1 : -1);
     }
 
-    public GameObject[] RetrieveComponents()
+    public void Validate()
+    {
+        m_ship.BuildFromComponents(RetrieveComponents());
+        Close();
+    }
+
+    GameObject[] RetrieveComponents()
     {
         var result = new GameObject[m_selectors.Length];
         for (int i = 0; i < m_selectors.Length; i++)
@@ -60,7 +70,8 @@ public class ComponentMenu : MonoBehaviour
         return result;
     }
 
-    public void Close()
+
+    void Close()
     {
         m_canvas.enabled = false;
         CurrentSelector = null;
