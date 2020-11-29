@@ -23,13 +23,14 @@ public class ComponentMenu : MonoBehaviour
 
     [HideInInspector]
     public ComponentMenuSelector CurrentSelector;
-
     ComponentMenuSelector[] m_selectors;
 
+    Ship m_ship;
 
     private void Awake()
     {
         InstanciateSelector();
+        m_ship = GetComponent<Ship>();
     }
 
     void InstanciateSelector()
@@ -50,7 +51,13 @@ public class ComponentMenu : MonoBehaviour
             CurrentSelector?.Select(input.x > 0 ? 1 : -1);
     }
 
-    public GameObject[] RetrieveComponents()
+    public void Validate()
+    {
+        m_ship.BuildFromComponents(RetrieveComponents());
+        Close();
+    }
+
+    GameObject[] RetrieveComponents()
     {
         var result = new GameObject[m_selectors.Length];
         for (int i = 0; i < m_selectors.Length; i++)
@@ -60,7 +67,8 @@ public class ComponentMenu : MonoBehaviour
         return result;
     }
 
-    public void Close()
+
+    void Close()
     {
         m_canvas.enabled = false;
         CurrentSelector = null;
