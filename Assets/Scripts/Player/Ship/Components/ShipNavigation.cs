@@ -12,62 +12,46 @@ public class ShipNavigation : ShipComponent
     [SerializeField]
     float m_lookForwardDistance = 3;
 
-    [SerializeField]
-    public Transform CircuitForward;
-
     float m_currentRotation = 0;
     float m_direction;
 
     LayerMask m_levelLayerMask;
 
-    protected override void InitSpecific(ShipController.ShipContext context)
+    protected override void InitSpecific()
     {
         m_levelLayerMask = 1 << LevelManager.Instance.gameObject.layer;
-        context.onDirection += (float direction) => m_direction = direction;
+        m_context.onDirection += (float direction) => m_direction = direction;
     }
 
     private void FixedUpdate()
     {
         m_currentRotation += m_direction * m_steerIntensity * Time.fixedDeltaTime;
+        m_context.circuitForward.position = ProjectAtDistance(m_lookForwardDistance);
 
-        Vector3 forwardDirection = m_ship.CircuitFollow.forward * m_lookAheadDistance;
-        forwardDirection = Quaternion.AngleAxis(m_currentRotation, m_ship.CircuitFollow.up) * forwardDirection;
+        Vector3 direction = ProjectAtDistance(m_lookAheadDistance) - ProjectAtDistance(0);
 
-        Vector3 lookForwardDirection = m_ship.CircuitFollow.forward * m_lookForwardDistance;
-        lookForwardDirection = Quaternion.AngleAxis(m_currentRotation, m_ship.CircuitFollow.up) * lookForwardDirection;
+        Debug.DrawRay(transform.position, direction, Color.red, Time.fixedDeltaTime);
 
-
-        Vector3 forwardPostion = transform.position + forwardDirection * m_lookAheadDistance;
-        Vector3 lookForwardPostion = transform.position + lookForwardDirection * m_lookForwardDistance;
-        Vector3 directionDown = m_ship.transform.position - m_ship.CircuitPosition;
-        Vector3 directionDownForward = forwardPostion - m_ship.CircuitPosition;
-        Vector3 directionLookForwardPostion = lookForwardPostion - m_ship.CircuitPosition;
-
-        Vector3 directionStart, directionEnd;
-
-        RaycastHit hit;
-        Physics.Raycast(m_ship.CircuitPosition, directionDown.normalized, out hit, 100, m_levelLayerMask);
-        Debug.DrawRay(m_ship.CircuitPosition, directionDown.normalized * hit.distance, Color.red, Time.fixedDeltaTime);
-        directionStart = hit.point;
-
-        float currentHeight = (m_ship.transform.position - directionStart).magnitude;
-
-        Physics.Raycast(m_ship.CircuitPosition, directionDownForward.normalized, out hit, 100, m_levelLayerMask);
-        Debug.DrawRay(m_ship.CircuitPosition, directionDownForward.normalized * hit.distance, Color.red, Time.fixedDeltaTime);
-        directionEnd = hit.point;
-
-        Physics.Raycast(m_ship.CircuitPosition, directionLookForwardPostion.normalized, out hit, 100, m_levelLayerMask);
-        Debug.DrawRay(m_ship.CircuitPosition, directionLookForwardPostion.normalized * hit.distance, Color.red, Time.fixedDeltaTime);
-        CircuitForward.position = hit.point + currentHeight * -directionLookForwardPostion.normalized;
-
-        Vector3 direction = directionEnd - directionStart;
-
-        Debug.DrawRay(m_ship.transform.position, direction, Color.red, Time.fixedDeltaTime);
-
-        m_ship.Rigidbody.rotation = Quaternion.Lerp(
-            m_ship.Rigidbody.rotation,
-            Quaternion.LookRotation(direction, -directionDown),
+        m_context.ship.Rigidbody.rotation = Quaternion.Lerp(
+            m_context.ship.Rigidbody.rotation,
+            Quaternion.LookRotation(direction, m_context.circuitFollow.up),
             Time.fixedDeltaTime * m_reactivity
         );
+    }
+
+    Vector3 ProjectAtDistance(float distance)
+    {
+        Vector3 circuitTarget = m_context.circuitFollow.forward * distance;
+        circuitTarget = Quaternion.AngleAxis(m_currentRotation, m_context.circuitFollow.up) * circuitTarget;
+        Vector3 target = transform.position + circuitTarget * distance;
+        Vector3 direction = target - m_context.ship.CircuitPosition;
+        Vector3 result = target;
+        RaycastHit hit;
+        if (Physics.Raycast(m_context.ship.CircuitPosition, direction.normalized, out hit, 100, m_levelLayerMask))
+        {
+            Debug.DrawRay(m_context.ship.CircuitPosition, direction.normalized * hit.distance, Color.red, Time.fixedDeltaTime);
+            result = hit.point;
+        }
+        return result;
     }
 }

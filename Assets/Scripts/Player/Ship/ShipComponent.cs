@@ -2,13 +2,13 @@
 
 public abstract class ShipComponent : MonoBehaviour
 {
-    protected Ship m_ship;
+    protected ShipContext m_context;
 
-    public void Init(ShipController.ShipContext context)
+    public void Init(ShipContext context)
     {
-        m_ship = context.ship;
-        InitSpecific(context);
+        m_context = context;
+        InitSpecific();
     }
 
-    protected abstract void InitSpecific(ShipController.ShipContext context);
+    protected abstract void InitSpecific();
 }

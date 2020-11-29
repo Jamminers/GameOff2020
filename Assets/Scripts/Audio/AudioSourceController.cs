@@ -25,6 +25,12 @@ public class AudioSourceController : MonoBehaviour
         m_source.volume = m_volumeCurve.Evaluate(m_currentTime);
     }
 
+    public void PlayClip(AudioClip clip)
+    {
+        m_source.clip = clip;
+        m_source.Play();
+    }
+
     public void SetVolume(bool enabled)
     {
         m_volumeActive = enabled;

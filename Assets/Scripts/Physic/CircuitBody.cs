@@ -3,13 +3,11 @@
 [RequireComponent(typeof(Rigidbody))]
 public class CircuitBody : MonoBehaviour
 {
+    [Header("CircuitBody")]
     [SerializeField]
     float m_hoverHeight = 1;
     [SerializeField]
     float m_hoverForce = 1;
-
-    [SerializeField]
-    public Transform CircuitFollow;
 
     protected LevelManager m_level;
 
@@ -26,7 +24,7 @@ public class CircuitBody : MonoBehaviour
 
     protected SplineMesh.CurveSample m_circuitProjection;
 
-    private void Awake()
+    protected void Awake()
     {
         Rigidbody = GetComponent<Rigidbody>();
         m_level = LevelManager.Instance;
@@ -45,9 +43,6 @@ public class CircuitBody : MonoBehaviour
         CircuitRotation = Quaternion.FromToRotation(upCircuit.normalized, UpShip.normalized) * m_circuitProjection.Rotation;
 
         m_oldPosition = Rigidbody.position;
-
-        CircuitFollow.position = CircuitPosition;
-        CircuitFollow.rotation = CircuitRotation;
 
         // Hover effect
         Ray rayToFloor = new Ray(transform.position, -Up);
