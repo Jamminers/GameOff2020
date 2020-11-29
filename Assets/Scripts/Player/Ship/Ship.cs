@@ -10,7 +10,7 @@ public class ShipContext
 
     public Transform circuitFollow, circuitForward;
 
-    public AudioSource audioSource;
+    public AudioSourceController audioSourceController;
 
     public delegateFloat onDirection;
     public delegateFloat onAccelerate;
@@ -27,8 +27,6 @@ public class Ship : CircuitBody
     [Header("Ship")]
     [SerializeField]
     Transform m_componentsParent;
-    [SerializeField]
-    ComponentMenu m_componentMenu;
 
     [SerializeField]
     ShipContext m_context;
