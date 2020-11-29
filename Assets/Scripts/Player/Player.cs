@@ -25,5 +25,7 @@ public class Player : MonoBehaviour
         }
 
         m_title.text = string.Format(m_title.text, input.playerIndex);
+
+        transform.eulerAngles = new Vector3(0, 0, 90 * input.playerIndex);
     }
 }
