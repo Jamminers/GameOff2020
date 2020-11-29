@@ -27,8 +27,6 @@ public class Ship : CircuitBody
     [Header("Ship")]
     [SerializeField]
     Transform m_componentsParent;
-    [SerializeField]
-    ComponentMenu m_componentMenu;
 
     [SerializeField]
     ShipContext m_context;
