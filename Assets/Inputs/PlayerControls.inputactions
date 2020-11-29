@@ -1,5 +1,5 @@
 {
-    "name": "ShipControls",
+    "name": "PlayerControls",
     "maps": [
         {
             "name": "Ship",
@@ -149,7 +149,7 @@
             "actions": [
                 {
                     "name": "Navigate",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "29a35b1f-438e-4fad-9fcf-d15ed27e2a55",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -157,7 +157,7 @@
                 },
                 {
                     "name": "Submit",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "59ecc242-39d2-46ea-91c4-fb6fad447409",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -165,7 +165,7 @@
                 },
                 {
                     "name": "Cancel",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "6d79fbcf-15c5-4036-aeac-c6bc41b56dc7",
                     "expectedControlType": "Button",
                     "processors": "",

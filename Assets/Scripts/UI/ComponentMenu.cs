@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class ComponentMenu : MonoBehaviour
 {
+    static List<ComponentMenu> ActiveMenus = new List<ComponentMenu>();
+
     [Serializable]
     public class SelectorConfiguration
     {
@@ -27,11 +31,16 @@ public class ComponentMenu : MonoBehaviour
     ComponentMenuSelector[] m_selectors;
 
     Ship m_ship;
+    GameObject[] m_componentsSelection;
+
+    bool m_completed;
 
     private void Awake()
     {
         InstanciateSelector();
         m_ship = GetComponent<Ship>();
+
+        ActiveMenus.Add(this);
     }
 
     void InstanciateSelector()
@@ -44,7 +53,29 @@ public class ComponentMenu : MonoBehaviour
             m_selectors[i].Initialize(this, m_configurations[i]);
         }
 
-        m_canvas.GetComponentInChildren<EventSystem>().SetSelectedGameObject(m_selectors[m_selectors.Length - 1].gameObject);
+        Transform submitButton = m_menuParent.GetChild(0);
+        submitButton.SetAsLastSibling();
+
+        foreach (Transform child in m_menuParent)
+        {
+            int index = child.GetSiblingIndex();
+            var selectable = child.GetComponent<Selectable>();
+            var navigation = new Navigation() { mode = Navigation.Mode.Explicit };
+
+            if (index != 0)
+            {
+                navigation.selectOnUp = m_menuParent.GetChild(index - 1).GetComponent<Selectable>();
+            }
+
+            if (index != m_menuParent.childCount - 1)
+            {
+                navigation.selectOnDown = m_menuParent.GetChild(index + 1).GetComponent<Selectable>();
+            }
+
+            selectable.navigation = navigation;
+        }
+
+        m_canvas.GetComponentInChildren<EventSystem>().SetSelectedGameObject(m_selectors[0].gameObject);
     }
 
     public void OnNavigate(InputValue value)
@@ -56,8 +87,23 @@ public class ComponentMenu : MonoBehaviour
 
     public void Validate()
     {
-        m_ship.BuildFromComponents(RetrieveComponents());
-        Close();
+        m_componentsSelection = RetrieveComponents();
+        m_menuParent.gameObject.SetActive(false);
+        m_completed = true;
+
+        foreach (var m in ActiveMenus)
+        {
+            if (!m.m_completed)
+            {
+                return;
+            }
+        }
+
+        foreach (var m in ActiveMenus)
+        {
+            m.m_ship.BuildFromComponents(m_componentsSelection);
+            m.Close();
+        }
     }
 
     GameObject[] RetrieveComponents()
