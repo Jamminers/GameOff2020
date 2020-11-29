@@ -10,7 +10,7 @@ public class ShipContext
 
     public Transform circuitFollow, circuitForward;
 
-    public AudioSource audioSource;
+    public AudioSourceController audioSourceController;
 
     public delegateFloat onDirection;
     public delegateFloat onAccelerate;
