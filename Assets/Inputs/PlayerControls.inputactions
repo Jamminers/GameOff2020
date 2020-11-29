@@ -98,6 +98,39 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "Left Right [Keyboard]",
+                    "id": "d46cce7c-6c16-4f1c-8e61-91f21c87a764",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Direction",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "706d1e78-ee26-4628-9c42-7c847df84569",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Direction",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "ebf7a43a-94ba-4e49-90df-633f2e589289",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Direction",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
                     "id": "65443a71-944e-4cc0-93b1-07efe22ff45b",
                     "path": "<Gamepad>/rightTrigger",
@@ -121,6 +154,17 @@
                 },
                 {
                     "name": "",
+                    "id": "74bdfe6c-4118-4af2-ab38-806d9dae4123",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Accelerate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "dce301ce-9c5e-4b89-b621-86d515362681",
                     "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
@@ -134,6 +178,17 @@
                     "name": "",
                     "id": "a2efb98a-3cb9-4370-bd50-f2b0a5cbbafe",
                     "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Brake",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b7a58d09-9a29-4c56-a70f-00893d68ae11",
+                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
