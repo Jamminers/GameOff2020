@@ -31,6 +31,13 @@ public class Ship : CircuitBody
     [SerializeField]
     ShipContext m_context;
 
+    [Header("Collision")]
+    [SerializeField]
+    float m_collisionThresholdRatio = 0.7f;
+    float m_collisionThreshold;
+    [SerializeField]
+    float m_respawnDistance = 50;
+
     new void Awake()
     {
         base.Awake();
@@ -44,6 +51,8 @@ public class Ship : CircuitBody
             var component = Instantiate(c, m_componentsParent).GetComponent<ShipComponent>();
             component.Init(m_context);
         }
+
+        m_collisionThreshold = m_componentsParent.GetComponentInChildren<ShipReactor>().SpeedMax * m_collisionThresholdRatio * 1000;
     }
 
     new void FixedUpdate()
@@ -67,5 +76,14 @@ public class Ship : CircuitBody
     public void OnBrake(InputValue value)
     {
         m_context.onBrake?.Invoke(value.Get<float>());
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.impulse.magnitude > m_collisionThreshold)
+        {
+            Debug.Log($"You dead : {other.impulse.magnitude}");
+            Rigidbody.position = m_level.SplineCircuit.GetSampleAtDistance(m_circuitProjection.distanceInCurve - m_respawnDistance).location;
+        }
     }
 }
