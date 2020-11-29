@@ -7,18 +7,17 @@ public class ShipBrake : ShipComponent
 
     bool m_active;
 
-    protected override void InitSpecific(ShipController.ShipContext context)
+    protected override void InitSpecific()
     {
-        m_ship = context.ship;
-        context.onBrake += (float value) => m_active = value == 1;
+        m_context.onBrake += (float value) => m_active = value == 1;
     }
 
     private void FixedUpdate()
     {
         if (m_active)
         {
-            Vector3 force = m_intensity * m_ship.AbsoluteVelocity * Time.fixedDeltaTime;
-            m_ship.Rigidbody.AddForce(-force, ForceMode.VelocityChange);
+            Vector3 force = m_intensity * m_context.ship.AbsoluteVelocity * Time.fixedDeltaTime;
+            m_context.ship.Rigidbody.AddForce(-force, ForceMode.VelocityChange);
         }
     }
 }

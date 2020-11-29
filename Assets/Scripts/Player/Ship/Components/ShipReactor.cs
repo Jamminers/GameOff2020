@@ -4,6 +4,8 @@ using UnityEngine.Events;
 public class ShipReactor : ShipComponent
 {
     [SerializeField]
+    AudioClip m_clip;
+    [SerializeField]
     float m_coolDown, m_releaseTime;
 
     [Header("Power")]
@@ -34,9 +36,13 @@ public class ShipReactor : ShipComponent
     float m_lastActive;
     float m_t, m_intensityCurrent;
 
-    protected override void InitSpecific(ShipController.ShipContext context)
+    protected override void InitSpecific()
     {
-        context.onAccelerate += (float value) => m_active = value == 1;
+        m_context.onAccelerate += (float value) => m_active = value == 1;
+
+        m_context.audioSource.clip = m_clip;
+        m_context.audioSource.Play();
+        m_onSpeed.AddListener((speed) => m_context.audioSource.volume = speed);
     }
 
     private void FixedUpdate()
@@ -57,9 +63,9 @@ public class ShipReactor : ShipComponent
         }
         m_intensityCurrent *= m_intensityMax;
 
-        Vector3 force = m_intensityCurrent * m_ship.Rigidbody.transform.forward;
-        if (m_ship.AbsoluteVelocity.magnitude < m_speedMax)
-            m_ship.Rigidbody.AddForceAtPosition(force, transform.position, ForceMode.Acceleration);
+        Vector3 force = m_intensityCurrent * m_context.ship.Rigidbody.transform.forward;
+        if (m_context.ship.AbsoluteVelocity.magnitude < m_speedMax)
+            m_context.ship.Rigidbody.AddForceAtPosition(force, transform.position, ForceMode.Acceleration);
 
         m_onAccelerate.Invoke(m_intensityCurrent != 0);
         m_onSpeed.Invoke(m_intensityCurrent);
