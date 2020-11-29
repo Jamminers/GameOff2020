@@ -75,7 +75,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_delayDeceleration: 0
+  m_delayDeceleration: 0.2
   m_curveDeceleration:
     serializedVersion: 2
     m_Curve:
