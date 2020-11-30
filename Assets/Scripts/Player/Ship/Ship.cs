@@ -1,5 +1,7 @@
 ﻿using System;
+using Cinemachine;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [Serializable]
@@ -39,6 +41,10 @@ public class Ship : CircuitBody
     float m_respawnDistance = 50;
     [SerializeField]
     GameObject m_deathParticles;
+
+    [Header("Game Logic")]
+    [SerializeField]
+    UnityEvent<int> m_onFinish;
 
     new void Awake()
     {
@@ -88,5 +94,10 @@ public class Ship : CircuitBody
             Instantiate(m_deathParticles, Rigidbody.position, Quaternion.identity);
             Rigidbody.position = m_level.SplineCircuit.GetSampleAtDistance(m_circuitProjection.distanceInCurve - m_respawnDistance).location;
         }
+    }
+
+    public void EndGame(int rank)
+    {
+        m_onFinish.Invoke(rank);
     }
 }
