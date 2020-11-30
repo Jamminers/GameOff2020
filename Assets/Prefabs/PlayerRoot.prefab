@@ -614,7 +614,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2867008104099562214}
-  m_LocalRotation: {x: 0.062137436, y: 0.0000000112435625, z: -6.999985e-10, w: 0.9980676}
+  m_LocalRotation: {x: 0.062137444, y: -0.000000009200812, z: 5.728216e-10, w: 0.9980676}
   m_LocalPosition: {x: 0, y: -3.5, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -957,6 +957,9 @@ MonoBehaviour:
     circuitFollow: {fileID: 8475637883030791801}
     circuitForward: {fileID: 4759278040515010505}
     audioSourceController: {fileID: 5482889970013062489}
+  m_collisionThresholdRatio: 0.7
+  m_respawnDistance: 50
+  m_deathParticles: {fileID: 6696804307527587518, guid: 4f1d9cb88d9348c479e55aeea8875a97, type: 3}
 --- !u!114 &4010438522324762961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1007,7 +1010,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2867008104855889051}
-  m_LocalRotation: {x: -0.000000007450581, y: 0.000000022350847, z: -0.0000000027938551, w: 1}
+  m_LocalRotation: {x: 0.000000007450581, y: -0.000000022227837, z: 0.0000000027784792, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

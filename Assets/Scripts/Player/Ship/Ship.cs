@@ -37,6 +37,8 @@ public class Ship : CircuitBody
     float m_collisionThreshold;
     [SerializeField]
     float m_respawnDistance = 50;
+    [SerializeField]
+    GameObject m_deathParticles;
 
     new void Awake()
     {
@@ -83,6 +85,7 @@ public class Ship : CircuitBody
         if (other.impulse.magnitude > m_collisionThreshold)
         {
             Debug.Log($"You dead : {other.impulse.magnitude}");
+            Instantiate(m_deathParticles, Rigidbody.position, Quaternion.identity);
             Rigidbody.position = m_level.SplineCircuit.GetSampleAtDistance(m_circuitProjection.distanceInCurve - m_respawnDistance).location;
         }
     }
