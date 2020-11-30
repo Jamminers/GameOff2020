@@ -12,7 +12,7 @@ public class ShipReactor : ShipComponent
     [SerializeField]
     float m_intensityMax;
     [SerializeField]
-    float m_speedMax;
+    public float SpeedMax;
 
     [Header("Acceleration")]
     [SerializeField]
@@ -63,7 +63,7 @@ public class ShipReactor : ShipComponent
         m_intensityCurrent *= m_intensityMax;
 
         Vector3 force = m_intensityCurrent * m_context.ship.Rigidbody.transform.forward;
-        if (m_context.ship.AbsoluteVelocity.magnitude < m_speedMax)
+        if (m_context.ship.AbsoluteVelocity.magnitude < SpeedMax)
             m_context.ship.Rigidbody.AddForceAtPosition(force, transform.position, ForceMode.Acceleration);
 
         m_onAccelerate.Invoke(m_intensityCurrent != 0);

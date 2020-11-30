@@ -49,7 +49,7 @@ MonoBehaviour:
   m_coolDown: 0
   m_releaseTime: 0
   m_intensityMax: 40
-  m_speedMax: 20
+  SpeedMax: 30
   m_delayAcceleration: 1
   m_curveAcceleration:
     serializedVersion: 2
