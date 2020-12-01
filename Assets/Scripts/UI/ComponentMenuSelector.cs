@@ -36,6 +36,10 @@ public class ComponentMenuSelector : MonoBehaviour
     public void Select(int direction)
     {
         m_selected = (m_selected + direction) % m_options.Length;
+        if (m_selected < 0)
+        {
+            m_selected += m_options.Length;
+        }
         m_textName.text = Selected.name;
     }
 }
