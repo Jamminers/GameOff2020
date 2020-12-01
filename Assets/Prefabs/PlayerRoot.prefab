@@ -1320,6 +1320,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_title: {fileID: 8144236855985216507}
+  m_availableSkins:
+  - {fileID: 2100000, guid: 652107f36a28e44479c0b827dee5852a, type: 2}
+  - {fileID: 2100000, guid: 663834164c6a04740aaa1b778249ce7e, type: 2}
+  - {fileID: 2100000, guid: 79f64ed6f5d6d374d91c3a0af4070258, type: 2}
+  - {fileID: 2100000, guid: aeee7071bea0a4c478b4fea5933c5f79, type: 2}
 --- !u!1 &3026351265219538820
 GameObject:
   m_ObjectHideFlags: 0

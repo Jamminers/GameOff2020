@@ -46,6 +46,9 @@ public class Ship : CircuitBody
     [SerializeField]
     UnityEvent<int> m_onFinish;
 
+    [HideInInspector]
+    public Material m_material;
+
     new void Awake()
     {
         base.Awake();
@@ -58,6 +61,11 @@ public class Ship : CircuitBody
         {
             var component = Instantiate(c, m_componentsParent).GetComponent<ShipComponent>();
             component.Init(m_context);
+
+            foreach (var mr in component.GetComponentsInChildren<MeshRenderer>())
+            {
+                mr.material = m_material;
+            }
         }
 
         m_collisionThreshold = m_componentsParent.GetComponentInChildren<ShipReactor>().SpeedMax * m_collisionThresholdRatio * 1000;
