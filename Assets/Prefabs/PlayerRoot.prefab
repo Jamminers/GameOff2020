@@ -780,7 +780,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2867008104099562214}
-  m_LocalRotation: {x: 0.062137436, y: 0.000000011242455, z: -6.999298e-10, w: 0.9980676}
+  m_LocalRotation: {x: 0.062137447, y: -0.000000011566907, z: 7.201295e-10, w: 0.9980676}
   m_LocalPosition: {x: 0, y: -3.5, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1124,7 +1124,7 @@ MonoBehaviour:
     circuitForward: {fileID: 4759278040515010505}
     audioSourceController: {fileID: 5482889970013062489}
   m_collisionThresholdRatio: 0.7
-  m_respawnDistance: 50
+  m_respawnDistance: 10
   m_deathParticles: {fileID: 6696804307527587518, guid: 4f1d9cb88d9348c479e55aeea8875a97, type: 3}
   m_onFinish:
     m_PersistentCalls:
@@ -1230,7 +1230,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2867008104855889051}
-  m_LocalRotation: {x: -0.000000007450581, y: 0.000000022354477, z: -0.0000000027943095, w: 1}
+  m_LocalRotation: {x: 0.000000011175871, y: -0.000000023183649, z: 0.000000002897956, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1320,6 +1320,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_title: {fileID: 8144236855985216507}
+  m_availableSkins:
+  - {fileID: 2100000, guid: 652107f36a28e44479c0b827dee5852a, type: 2}
+  - {fileID: 2100000, guid: 663834164c6a04740aaa1b778249ce7e, type: 2}
+  - {fileID: 2100000, guid: 79f64ed6f5d6d374d91c3a0af4070258, type: 2}
+  - {fileID: 2100000, guid: aeee7071bea0a4c478b4fea5933c5f79, type: 2}
 --- !u!1 &3026351265219538820
 GameObject:
   m_ObjectHideFlags: 0

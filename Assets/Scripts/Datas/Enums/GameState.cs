@@ -1,5 +1,6 @@
 ﻿public enum GameState
 {
-    MenuIntro,
+    MenuWelcome,
+    MenuLobby,
     GameMain,
 }
