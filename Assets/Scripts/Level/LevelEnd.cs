@@ -9,6 +9,7 @@ public class LevelEnd : MonoBehaviour
         Ship ship = other.attachedRigidbody?.GetComponent<Ship>();
         if (ship)
         {
+            count++;
             ship.EndGame(count);
         }
     }
