@@ -12540,7 +12540,7 @@ PrefabInstance:
     - target: {fileID: 3309584312359718917, guid: 19d84b471f963bd42b4109b41a0771eb, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 3bde8a779e474a14cab89085b2c53bf7, type: 2}
+      objectReference: {fileID: 2100000, guid: b390b69401c4ac54c9ca20411c277ec8, type: 2}
     - target: {fileID: 8937883675467387824, guid: 19d84b471f963bd42b4109b41a0771eb, type: 3}
       propertyPath: m_Name
       value: Obstacle_twist
@@ -12730,7 +12730,7 @@ PrefabInstance:
     - target: {fileID: 3309584312359718917, guid: 19d84b471f963bd42b4109b41a0771eb, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 3bde8a779e474a14cab89085b2c53bf7, type: 2}
+      objectReference: {fileID: 2100000, guid: b390b69401c4ac54c9ca20411c277ec8, type: 2}
     - target: {fileID: 8937883675467387824, guid: 19d84b471f963bd42b4109b41a0771eb, type: 3}
       propertyPath: m_Name
       value: Obstacle_twist
@@ -13172,7 +13172,7 @@ PrefabInstance:
     - target: {fileID: 3309584312359718917, guid: 19d84b471f963bd42b4109b41a0771eb, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 3bde8a779e474a14cab89085b2c53bf7, type: 2}
+      objectReference: {fileID: 2100000, guid: b390b69401c4ac54c9ca20411c277ec8, type: 2}
     - target: {fileID: 8937883675467387824, guid: 19d84b471f963bd42b4109b41a0771eb, type: 3}
       propertyPath: m_Name
       value: Obstacle_twist
