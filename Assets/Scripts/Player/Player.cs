@@ -10,6 +10,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     Text m_title;
 
+    [SerializeField]
+    Material[] m_availableSkins;
+
     void Awake()
     {
         var input = GetComponentInChildren<PlayerInput>();
@@ -27,5 +30,7 @@ public class Player : MonoBehaviour
         m_title.text = string.Format(m_title.text, input.playerIndex + 1);
 
         transform.eulerAngles = new Vector3(0, 0, 90 * input.playerIndex);
+
+        GetComponentInChildren<Ship>().m_material = m_availableSkins[input.playerIndex];
     }
 }

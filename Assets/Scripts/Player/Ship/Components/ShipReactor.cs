@@ -7,6 +7,8 @@ public class ShipReactor : ShipComponent
     AudioClip m_clip;
     [SerializeField]
     float m_coolDown, m_releaseTime;
+    [SerializeField]
+    bool m_oneShot;
 
     [Header("Power")]
     [SerializeField]
@@ -32,7 +34,7 @@ public class ShipReactor : ShipComponent
     [SerializeField]
     UnityEvent<float> m_onSpeed;
 
-    bool m_active;
+    bool m_active, m_released = true;
     float m_lastActive;
     float m_t, m_intensityCurrent;
 
@@ -46,14 +48,17 @@ public class ShipReactor : ShipComponent
 
     private void FixedUpdate()
     {
-        bool isCool = m_lastActive + m_coolDown < Time.time;
+        bool isCool = m_oneShot ? m_released : m_lastActive + m_coolDown < Time.time;
+
         bool isReleasing = m_lastActive + m_releaseTime > Time.time;
         if ((m_active && isCool) || isReleasing)
         {
             m_t = Mathf.Clamp01(m_t + Time.fixedDeltaTime / m_delayAcceleration);
             m_intensityCurrent = m_curveAcceleration.Evaluate(m_t);
             if (m_active && !isReleasing)
+            {
                 m_lastActive = Time.time;
+            }
         }
         else
         {
@@ -68,5 +73,7 @@ public class ShipReactor : ShipComponent
 
         m_onAccelerate.Invoke(m_intensityCurrent != 0);
         m_onSpeed.Invoke(m_intensityCurrent);
+
+        m_released = !m_active;
     }
 }

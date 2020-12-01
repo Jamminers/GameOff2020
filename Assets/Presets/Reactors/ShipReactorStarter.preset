@@ -37,12 +37,16 @@ Preset:
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
+    propertyPath: m_oneShot
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
     propertyPath: m_intensityMax
     value: 40
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: SpeedMax
-    value: 30
+    value: 60
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_delayAcceleration

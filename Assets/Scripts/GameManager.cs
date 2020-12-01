@@ -1,25 +1,39 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    GameState m_currentState = GameState.MenuIntro;
+    GameState m_currentState;
 
     PlayerInputManager m_playerInputManager;
-    AudioManager m_audioManager;
+
+    [SerializeField]
+    UnityEvent<GameState> m_onMenuWelcome, m_onMenuLobby, m_onGameMain;
 
     void Awake()
     {
-        m_audioManager = AudioManager.Instance;
         m_playerInputManager = GetComponentInChildren<PlayerInputManager>();
-
-        m_playerInputManager.onPlayerJoined += (playerInput) => SetState(GameState.GameMain);
+        m_playerInputManager.onPlayerJoined += (playerInput) => SetState(GameState.MenuLobby);
+        SetState(GameState.MenuWelcome);
     }
 
     public void SetState(GameState state)
     {
         print($"[GameManager] Set state : {state.ToString()}");
         m_currentState = state;
-        m_audioManager.OnChangeGameState(m_currentState);
+
+        switch (m_currentState)
+        {
+            case GameState.MenuWelcome:
+                m_onMenuWelcome.Invoke(m_currentState);
+                break;
+            case GameState.MenuLobby:
+                m_onMenuLobby.Invoke(m_currentState);
+                break;
+            case GameState.GameMain:
+                m_onGameMain.Invoke(m_currentState);
+                break;
+        }
     }
 }
