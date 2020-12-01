@@ -162,7 +162,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3512559772023187840}
-  m_LocalRotation: {x: -0, y: -0, z: -0.0000000016298143, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.1, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
@@ -184,12 +184,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_clip: {fileID: 8300000, guid: 45451441776c1884aa20bfcc1409a18d, type: 3}
-  m_coolDown: 0
+  m_coolDown: 3
   m_releaseTime: 0
-  m_oneShot: 0
-  m_intensityMax: 30
-  SpeedMax: 20
-  m_delayAcceleration: 1
+  m_oneShot: 1
+  m_intensityMax: 100
+  SpeedMax: 120
+  m_delayAcceleration: 0
   m_curveAcceleration:
     serializedVersion: 2
     m_Curve:
@@ -214,7 +214,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_delayDeceleration: 0.2
+  m_delayDeceleration: 2.5
   m_curveDeceleration:
     serializedVersion: 2
     m_Curve:
