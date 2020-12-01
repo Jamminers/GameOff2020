@@ -24,7 +24,7 @@ public class ComponentMenuSelector : MonoBehaviour
     {
         m_menu = menu;
         m_options = config.Options;
-        m_textName.text = config.Name;
+        Select(0);
     }
 
     public void SetActive(bool active)
@@ -36,6 +36,6 @@ public class ComponentMenuSelector : MonoBehaviour
     public void Select(int direction)
     {
         m_selected = (m_selected + direction) % m_options.Length;
-
+        m_textName.text = Selected.name;
     }
 }
