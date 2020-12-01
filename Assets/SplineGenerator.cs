@@ -56,8 +56,6 @@ public class SplineGenerator : MonoBehaviour
 
             _spline.nodes.Clear();
             _spline.curves.Clear();
-            // _spline.Reset(new SplineNode(_initialPosition, _initialDirection), new SplineNode(_initialPosition, _initialDirection));
-            // var preexistingNodeAmount = _spline.nodes.Count;
 
             var t = 0f;
             var initialPosition = _initialPosition;
@@ -78,6 +76,15 @@ public class SplineGenerator : MonoBehaviour
             _spline.UpdateAfterCurveChanged();
 
             _splineSmoother.SmoothAll();
+
+            var cubicBezierCurves = _spline.curves;
+            for (var i = 0; i < cubicBezierCurves.Count; i++)
+            {
+                if (i > 0)
+                {
+                    cubicBezierCurves[i].Previous = cubicBezierCurves[i - 1];
+                }
+            }
         }
     }
 
