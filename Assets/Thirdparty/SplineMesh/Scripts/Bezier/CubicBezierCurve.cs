@@ -24,7 +24,7 @@ namespace SplineMesh
 
         public SplineNode n1, n2;
 
-        private CubicBezierCurve previous;
+        public CubicBezierCurve Previous { get; set; }
 
         /// <summary>
         /// Length of the curve in world unit.
@@ -47,7 +47,7 @@ namespace SplineMesh
             this.n2 = n2;
             n1.Changed += ComputeSamples;
             n2.Changed += ComputeSamples;
-            this.previous = previous;
+            Previous = previous;
             ComputeSamples(null, null);
         }
 
@@ -155,11 +155,11 @@ namespace SplineMesh
         private CurveSample CreateSample(float distance, float time)
         {
             float distancePrevious = 0;
-            CubicBezierCurve previous = this.previous;
+            CubicBezierCurve previous = this.Previous;
             while (previous != null)
             {
                 distancePrevious += previous.Length;
-                previous = previous.previous;
+                previous = previous.Previous;
             }
 
             return new CurveSample(

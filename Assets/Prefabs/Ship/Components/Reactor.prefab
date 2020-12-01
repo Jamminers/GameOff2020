@@ -48,8 +48,8 @@ MonoBehaviour:
   m_clip: {fileID: 8300000, guid: 45451441776c1884aa20bfcc1409a18d, type: 3}
   m_coolDown: 0
   m_releaseTime: 0
-  m_intensityMax: 40
-  m_speedMax: 20
+  m_intensityMax: 30
+  SpeedMax: 20
   m_delayAcceleration: 1
   m_curveAcceleration:
     serializedVersion: 2

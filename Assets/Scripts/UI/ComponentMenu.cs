@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -17,11 +18,13 @@ public class ComponentMenu : MonoBehaviour
     }
 
     [SerializeField]
-    Canvas m_canvas;
+    EventSystem m_eventSystem;
     [SerializeField]
     Transform m_menuParent;
     [SerializeField]
     GameObject m_selectorPrefab;
+    [SerializeField]
+    UnityEvent m_onClose;
 
     [SerializeField]
     SelectorConfiguration[] m_configurations;
@@ -75,7 +78,7 @@ public class ComponentMenu : MonoBehaviour
             selectable.navigation = navigation;
         }
 
-        m_canvas.GetComponentInChildren<EventSystem>().SetSelectedGameObject(m_selectors[0].gameObject);
+        m_eventSystem.SetSelectedGameObject(m_selectors[0].gameObject);
     }
 
     public void OnNavigate(InputValue value)
@@ -119,7 +122,7 @@ public class ComponentMenu : MonoBehaviour
 
     void Close()
     {
-        m_canvas.enabled = false;
+        m_onClose.Invoke();
         CurrentSelector = null;
     }
 }
