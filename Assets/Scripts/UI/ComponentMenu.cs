@@ -107,6 +107,8 @@ public class ComponentMenu : MonoBehaviour
             m.m_ship.BuildFromComponents(m_componentsSelection);
             m.Close();
         }
+
+        GameManager.Instance.SetState(GameState.GameMain);
     }
 
     GameObject[] RetrieveComponents()

@@ -23,7 +23,11 @@ public class AudioManager : Singleton<AudioManager>
 
     public void OnChangeGameState(GameState state)
     {
-        m_source.clip = m_clipByState.Find(i => i.State == state).Clip;
-        m_source.Play();
+        AudioClipByGameState found = m_clipByState.Find(i => i.State == state);
+        if (found != null)
+        {
+            m_source.clip = found.Clip;
+            m_source.Play();
+        }
     }
 }
