@@ -6,7 +6,7 @@ Preset:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShipReactorStarter
+  m_Name: Helix
   m_TargetType:
     m_NativeTypeID: 114
     m_ManagedTypePPtr: {fileID: 11500000, guid: 4672da3c91ac4364d8f15eb7deaf2a42, type: 3}
@@ -34,23 +34,23 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_releaseTime
-    value: 0
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_oneShot
-    value: 0
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_intensityMax
-    value: 40
+    value: 30
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: SpeedMax
-    value: 60
+    value: 90
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_delayAcceleration
-    value: 1
+    value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_curveAcceleration.m_Curve.Array.size
@@ -134,7 +134,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_delayDeceleration
-    value: 0.2
+    value: 0.5
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_curveDeceleration.m_Curve.Array.size
